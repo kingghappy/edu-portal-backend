@@ -1,0 +1,30 @@
+# Hệ điều hành
+.DS_Store
+.env
+.idea/
+.vscode/
+
+# Build artifacts
+/build/
+/dist/
+/out/
+/tmp/
+
+# Phụ thuộc của Node.js
+/node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Nodemon
+.nodemonignore
+*.log
+.coverage/
+
+# Nhật ký và bộ nhớ cache
+/logs/
+/cache/
+
+# Môi trường phát triển cục bộ
+.env.local
+.env.*.local
