@@ -20,7 +20,6 @@ const hashPassword = async (initpass) => {
 const comparePass = async (inputPass, hashPassword) => {
     try {
         const result = await bcrypt.compare(inputPass, hashPassword)
-        console.log(result)
         return result
     } catch (error) {
         console.log("error in compare: ", error)

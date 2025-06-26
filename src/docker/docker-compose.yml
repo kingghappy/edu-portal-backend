@@ -6,6 +6,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: my_database  
     volumes:
-      - D:\WorkSpace\DATN_DB:/data/db
+      - C:\Users\kingh\Documents\Workspace\be_DATN\db:/data/db
     ports:
       - "27017:27017"

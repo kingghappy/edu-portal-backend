@@ -18,7 +18,6 @@ app.use('/api/admin', adminRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 
-
 // connect to db
 connDB()
 
