@@ -6,6 +6,7 @@ const studentSchema = new mongoose.Schema({
   class: { type: String },
   gpa: { type: Number, min: 0, max: 4 },
   isActive: { type: Boolean, default: true },
+  email: { type: String, unique: true },
 });
 
 const Student = mongoose.model("Student", studentSchema);

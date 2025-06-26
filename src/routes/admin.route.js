@@ -1,13 +1,24 @@
-import express from 'express'
-import { getAll, importData, findUser,updateUser,deleteUser } from '../controllers/admin.controller.js'
+import express from "express";
+import {
+  getAll,
+  getAllEmail,
+  importData,
+  findUser,
+  updateUser,
+  deleteUser,
+  deleteManyUser,
+  updateManyUser,
+} from "../controllers/admin.controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/all', getAll)
-router.get('/find', findUser)
-router.post('/add', importData)
-router.post('/update', updateUser)
-router.post('/delete', deleteUser)
+router.get("/all", getAll);
+router.get("/all-email", getAllEmail);
+router.get("/find", findUser);
+router.post("/add", importData);
+router.post("/update", updateUser);
+router.post("/update-all", updateManyUser);
+router.post("/delete", deleteUser);
+router.post("/delete-all", deleteManyUser);
 
-
-export default router
+export default router;
