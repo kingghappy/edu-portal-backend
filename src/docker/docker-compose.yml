@@ -6,6 +6,19 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: my_database  
     volumes:
-      - C:\Users\kingh\Documents\Workspace\be_DATN\db:/data/db
+      - D:\WorkSpace\DATN_DB:/data/db
     ports:
       - "27017:27017"
+
+  # minio:
+  #   image: quay.io/minio/minio
+  #   container_name: minio
+  #   ports:
+  #     - "9000:9000"  # API
+  #     - "9001:9001"  # Console
+  #   volumes:
+  #     - D:\WorkSpace\DATN_DB2:/data
+  #   environment:
+  #     - MINIO_ROOT_USER=admin
+  #     - MINIO_ROOT_PASSWORD=password
+  #   command: server /data --console-address ":9001"

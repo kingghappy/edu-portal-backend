@@ -1,24 +1,21 @@
 import express from "express";
-import {
-  getAll,
-  getAllEmail,
-  importData,
-  findUser,
-  updateUser,
-  deleteUser,
-  deleteManyUser,
-  updateManyUser,
-} from "../controllers/admin.controller.js";
+import AdminController from "../controllers/admin.controller.js";
+import errorHandler from "../middlewares/errorHandler.js";
 
 const router = express.Router();
 
-router.get("/all", getAll);
-router.get("/all-email", getAllEmail);
-router.get("/find", findUser);
-router.post("/add", importData);
-router.post("/update", updateUser);
-router.post("/update-all", updateManyUser);
-router.post("/delete", deleteUser);
-router.post("/delete-all", deleteManyUser);
+const adminController = new AdminController()
+
+router.get("/all", adminController.all);
+router.get("/all-email", adminController.allEmail);
+router.get("/find", adminController.findUserById);
+router.post("/add", adminController.importDataUser);
+router.post("/update", adminController.updateDataUser);
+router.post("/update-all", adminController.updateManyData);
+router.post("/delete", adminController.deleteDataUser);
+router.post("/delete-all", adminController.deleteFilterUser);
+
+router.use(errorHandler);
+
 
 export default router;

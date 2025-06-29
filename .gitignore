@@ -9,6 +9,7 @@
 /dist/
 /out/
 /tmp/
+/src/docker/
 
 # Phụ thuộc của Node.js
 /node_modules/

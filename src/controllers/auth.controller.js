@@ -1,27 +1,17 @@
-import { loginUser, logoutUser } from "../services/auth.service.js";
-
-const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const { token } = await loginUser(email, password)
-
-    res.status(200).json({
-      message: "Login successful",
-      token
-    });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(401).json({
-      message: "Internal server error",
-      error: error.message
-    });
+export default class AuthController {
+  constructor(authService) {
+    this.authService = authService;
   }
-};
 
-const logout = (req, res) => {
-  const result = logoutUser()
-  res.status(200).json(result)
-};
+  login = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) throw new Error("All fields are require !!");
 
-export { login, logout };
+      const token = await this.authService.login(email, password);
+      res.status(200).json({ token });
+    } catch (error) {
+      next(error);
+    }
+  };
+}

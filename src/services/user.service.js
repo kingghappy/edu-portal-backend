@@ -1,55 +1,48 @@
-import jwt from 'jsonwebtoken'
+import { AppError } from "../utils/AppError.js";
+import UserRepo from "../repositories/user.repo.js";
 
-import User from '../models/user.js'
-import { models } from './admin.service.js'
-import { comparePass } from '../config/Middleware/hashpasswrod.js'
+export default class UserService {
+  constructor(authService, models) {
+    this.authService = authService;
+    this.models = models;
+    this.userRepo = (model) => new UserRepo(model);
+  }
 
+   getProfile = async (token) => {
+    try {
+      if (!token) throw new AppError("Authorization required", 401);
+      
+      const decoded = this.authService.verifyToken(token);
+      if (!decoded?.role || !decoded?.refId) {
+        throw new AppError("Malformed token", 400);
+      }
 
+      const model = this.models[decoded.role];
+      if (!model) throw new AppError("Invalid user role", 403);
 
-const profileUser = async (token) => {
+      const userData = await this.userRepo(model).findById(decoded.refId);
+      if (!userData) throw new AppError("User not found", 404);
 
-    //check token is exist
-    if (!token) throw new Error("Not have token !!")
+      return userData;
+    } catch (error) {
+      throw new AppError(`Profile fetch failed: ${error.message}`, error.statusCode || 500);
+    }
+  }
 
-    //check valid token
-    const decode = jwt.verify(token, process.env.JWT_SECRET)
-    if (!decode) throw new Error("Invalid token !!")
+  changePass = async (token, currPass, newPass) => {
+    try {
+      const decoded = this.authService.verifyToken(token);
+      const model = this.models[decoded.role];
+      const user = await this.userRepo(model).findById(decoded.refId);
 
-    //check type of user by object key
-    const model = models[decode.role]
+      if (!(await comparePass(currPass, user.password))) {
+        throw new AppError("Current password is incorrect", 403);
+      }
 
-    //find user by refId
-    const userData = await model.findById(decode.refId).select("-_id")
-
-    return { userData }
-}
-
-const changePassUser = async (token, currPass, newPass) => {
-
-    //check token exist
-    if (!token) throw new Error("Token not exist !!")
-
-    //check token valid
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
-    if (!decode) throw new Error("Invalid token !!")
-
-
-    //find user by refId
-    const user = await User.findOne({ refId: decode.refId })
-    if (!user) throw new Error("User not exist !!")
-
-    //check user is changing password
-    const isUser = await comparePass(currPass, user.password)
-    if (!isUser) throw new Error("Wrong password !!")
-
-    //update password
-    user.password = newPass
-    await user.save()
-
-    return { message: "Update password success !!" }
-}
-
-export {
-    profileUser,
-    changePassUser
+      await this.userRepo(model).updatePass(decoded.refId, newPass);
+      return { success: true, message: "Password updated successfully" };
+    } catch (error) {
+      throw new AppError(`Password change failed: ${error.message}`, error.statusCode || 500);
+    }
+  }
 }

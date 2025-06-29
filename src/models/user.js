@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { hashPassword } from "../config/Middleware/hashpasswrod.js";
+import { hashPassword } from "../middlewares/hashpasswrod.js";
 
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
