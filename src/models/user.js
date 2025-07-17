@@ -4,18 +4,25 @@ import { hashPassword } from "../config/Middleware/hashpasswrod.js";
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  refId: { type: mongoose.Schema.Types.ObjectId, required: true },
   role: { type: String, enum: ["admin", "teacher", "student"], required: true },
+  ref_profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    refPath: "profileModel",
+  },
+  profileModel: {
+    type: String,
+    enum: ["Teacher", "Student"],
+  },
 });
 
-userSchema.pre("save", async function(next) {
+userSchema.pre("save", async function (next) {
   try {
-    if (this.isModified('password')) {
+    if (this.isModified("password")) {
       this.password = await hashPassword(this.password);
     }
     next();
   } catch (err) {
-    next(err);  // Chuyển lỗi đến middleware xử lý lỗi
+    next(err); // Chuyển lỗi đến middleware xử lý lỗi
   }
 });
 

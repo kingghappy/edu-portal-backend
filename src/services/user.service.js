@@ -1,10 +1,8 @@
 import jwt from 'jsonwebtoken'
 
 import User from '../models/user.js'
-import { models } from './admin.service.js'
 import { comparePass } from '../config/Middleware/hashpasswrod.js'
-
-
+import models from './../utils/types.js';
 
 const profileUser = async (token) => {
 
@@ -19,7 +17,7 @@ const profileUser = async (token) => {
     const model = models[decode.role]
 
     //find user by refId
-    const userData = await model.findById(decode.refId).select("-_id")
+    const userData = await model.findById(decode.ref_profile).select("-_id")
 
     return { userData }
 }

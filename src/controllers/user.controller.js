@@ -1,7 +1,3 @@
-import jwt from "jsonwebtoken";
-
-import User from "./../models/user.js";
-import { comparePass } from "../config/Middleware/hashpasswrod.js";
 import { changePassUser, profileUser } from "../services/user.service.js";
 
 const getProfile = async (req, res) => {

@@ -14,9 +14,9 @@ const loginUser = async (email, password) => {
     if (!isUser) throw new Error("Wrong password !!")
 
     //respone token to client
-    const token = jwt.sign({ email: user.email, role: user.role, refId: user.refId },
+    const token = jwt.sign({ email: user.email, role: user.role, ref_profile: user.ref_profile },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: '1d' }
     )
 
     return { token }

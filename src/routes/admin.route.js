@@ -1,7 +1,6 @@
 import express from "express";
 import {
   getAll,
-  getAllEmail,
   importData,
   findUser,
   updateUser,
@@ -13,12 +12,11 @@ import {
 const router = express.Router();
 
 router.get("/all", getAll);
-router.get("/all-email", getAllEmail);
 router.get("/find", findUser);
 router.post("/add", importData);
 router.post("/update", updateUser);
 router.post("/update-all", updateManyUser);
-router.post("/delete", deleteUser);
-router.post("/delete-all", deleteManyUser);
+router.delete("/delete", deleteUser);
+router.delete("/delete-all", deleteManyUser);
 
 export default router;
