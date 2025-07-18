@@ -6,7 +6,7 @@ import {
   deleteManyUserService,
   updateUserService,
   updateManyUserService,
-} from "../services/admin.service.js";
+} from "../../services/admin/user.service.js";
 
 // Hàm xử lý lỗi chung
 const handleRequest = async (res, serviceCall) => {
@@ -74,6 +74,10 @@ const updateManyUser = (req, res) => {
     }))
   );
 };
+
+const getSchedule = (req, res) => {
+  
+}
 
 export {
   getAll,

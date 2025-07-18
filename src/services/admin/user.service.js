@@ -1,5 +1,5 @@
-import models from "./../utils/types.js";
-import User from "../models/user.js";
+import models from "../../utils/types.js";
+import User from "../../models/user.js";
 
 // Hàm kiểm tra role và trả về model tương ứng
 const withValidModel = async (role, handler) => {
